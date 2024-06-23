@@ -1,5 +1,8 @@
 package com.example.station9;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Main {
     public static void main(String[] args) {
         int[] itemPrices1 = {1000, 1100, 1200, 1300};
@@ -15,6 +18,52 @@ public class Main {
 
     public static void test(int[] itemPrices) {
         // ここから
+
+        // クーポンA適用価格
+        // 送料なし
+        int total_a = 0;
+        for (int value : itemPrices) {
+            total_a += value;
+        }
+
+        // クーポンB適用価格
+        int total_b = 800;
+        for (int value : itemPrices) {
+            total_b += (value * 0.9);
+        }
+
+        // クーポンC適用価格
+        int total_c = 800;
+        for (int value : itemPrices) {
+            if (value >= 2000) {
+                total_c += (value * 0.8);
+            } else {
+                total_c += value;
+            }
+        }
+
+
+        // 5000円以上の場合は送料無料
+        if (total_b >= 5000) {
+            total_b -= 800;
+        }
+        if (total_c >= 5000) {
+            total_c -= 800;
+        }
+
+        // もっとも割引率の高いクーポンを求める
+        int result = getMin(total_a, total_b, total_c);
+        if (result == total_a) {
+            System.out.println("A");
+        } else if (result == total_b) {
+            System.out.println("B");
+        } else if (result == total_c) {
+            System.out.println("C");
+        }
         // ここまで
+    }
+
+    private static int getMin(Integer... integers) {
+        return Collections.min(Arrays.asList(integers));
     }
 }
